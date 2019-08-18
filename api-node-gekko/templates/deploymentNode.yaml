@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "api-node-gekko.fullname" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: kafka-producer
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: kafka-producer
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - env:
+        - name: HOSTKAFKA
+          value: {{ .Values.kafka.host }}
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        name: kafka-producer
+        ports:
+        - containerPort: 8080
+          protocol: TCP
