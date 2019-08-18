@@ -35,8 +35,7 @@ podTemplate(containers: [
             cd $BRANCH_NAME
             ls -al
             CHART=$(ls | grep .tgz)
-            curl -L --data-binary "@"$CHART chartmuseum-chartmuseum.admin.
-            .cluster.local:8080/api/charts
+            curl -L --data-binary "@"$CHART chartmuseum-chartmuseum.admin.svc.cluster.local:8080/api/charts
             curl chartmuseum-chartmuseum.admin.svc.cluster.local:8080/api/charts
             echo '######################## Curl Container End #################################'
             echo '######################## Helm Publish End #################################'
