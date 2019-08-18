@@ -15,6 +15,7 @@ podTemplate(containers: [
                 sh '''
                 echo '######################## Helm Build Start #################################'
                 cd charts-dotak
+                cd $BRANCH_NAME
                 helm init --client-only
                 helm package . 
                 echo '######################## Helm Container End ###############################'
@@ -30,6 +31,9 @@ podTemplate(containers: [
             sh '''
             echo '######################## Curl Container Start #################################'
             cd charts-dotak
+            ls -al
+            cd $BRANCH_NAME
+            ls -al
             CHART=$(ls | grep .tgz)
             curl -L --data-binary "@"$CHART chartmuseum-chartmuseum.chartmuseum.svc.cluster.local:8080/api/charts
             curl chartmuseum-chartmuseum.chartmuseum.svc.cluster.local:8080/api/charts
@@ -41,3 +45,4 @@ podTemplate(containers: [
       }
   }
 }
+
