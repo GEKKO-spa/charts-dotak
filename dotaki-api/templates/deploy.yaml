@@ -1,0 +1,61 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app-dotaki: api
+    env: {{ .Values.env }}
+    release: {{ .Release.Name }}
+  name: {{.Chart.Name}}-{{.Chart.Version}}-{{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      env: {{ .Values.env }}
+      app-dotaki: api
+      release: {{ .Release.Name }}
+  template:
+      labels:
+        app-dotaki: api
+        env: {{ .Values.env }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - env:
+        - name: APP_ENV
+          value: {{ .Values.env }}
+        - name: DTK_DEBUG
+          value: {{ .Values.DTK.debug }}
+        - name: DTK_MD5
+          value: {{ .Values.dtk.md5 }}
+        - name: REALTIME_HOST
+          value: {{ .Values.realtime.host }}
+        - name: REALTIME_PORT
+          value: {{ .Values.realtime.port }}
+        - name: REALTIME_PROTOCOL
+          value: {{ .Values.realtime.protocol }}
+        - name: SESSIONS_REDIS_HOST
+          value: {{ .Values.redis.host }}
+        - name: SESSIONS_REDIS_PORT
+          value: {{ .Values.redis.port }}
+        - name: SESSIONS_REDIS_AUTH
+          value: {{ .Values.redis.auth }}
+        - name: SESSIONS_REDIS_TLS
+          value: {{ .Values.redis.tls }}
+        - name: CASSANDRA_HOSTS
+          value: {{ .Values.cassandra.hosts }}
+        - name: CASSANDRA_USER
+          value: {{ .Values.cassandra.user }}
+        - name: CASSANDRA_PASSWORD
+          value: {{ .Values.cassandra.password }}
+        - name: CASSANDRA_KEYSPACE
+          value: {{ .Values.cassandra.keyspace }}
+        - name: CASSANDRA_DATACENTER
+          value: {{ .Values.cassandra.datacenter }}
+        - name: KAFKA_SERVER
+          value: {{ .Values.kafka.server }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: Always
+        name: api-deployment
+        ports:
+        - containerPort: {{ .Values.port }}
+          protocol: TCP

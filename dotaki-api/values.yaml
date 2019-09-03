@@ -1,0 +1,41 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+env: dev
+port: 8081
+
+replicaCount: 1
+
+image:
+  repository: nginx
+  tag: stable
+
+  # This is a YAML-formatted file.
+  # Declare variables to be passed into your templates.
+service:
+  type: ClusterIP
+  port: 80
+
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+dtk:
+  debug: true
+  md5: 8f4cdd6dde4b94144d1ed33892762092
+realtime:
+  host: 127.0.0.1
+  port: 5000
+  protocol: http://
+redis:
+  host: dev.dotaki.com
+  port: 6379
+  auth: bl4VtnloYiOFMy5Tf4r1zgBDBmgh5clLqg97bZeCO0
+  tls: false
+
+cassandra:
+  hosts: 217.182.82.5,54.38.38.63,54.36.118.113
+  user: cassandra
+  password: ZenWeShare*1234
+  keyspace: scoring_api
+  datacenter: dc1
+kafka:
+  server: dev.dotaki.com:9092
+  
